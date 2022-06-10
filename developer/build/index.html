@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>编译和自定义Trojan-Go - Trojan-Go Docs</title>
 <meta name="description" content="An unidentifiable mechanism that helps you bypass GFW.">
-<meta name="generator" content="Hugo 0.69.2" />
+<meta name="generator" content="Hugo 0.83.1" />
 <link href="https://p4gefau1t.github.io/trojan-goindex.xml" rel="alternate" type="application/rss+xml">
 <link rel="canonical" href="https://p4gefau1t.github.io/trojan-go/developer/build/">
 <link rel="stylesheet" href="https://p4gefau1t.github.io/trojan-go/css/theme.min.css">
@@ -19,9 +19,10 @@
 <meta property="og:title" content="编译和自定义Trojan-Go" />
 <meta property="og:description" content="编译需要Go版本号高于1.14.x，请在编译前确认你的编译器版本。推荐使用snap安装和更新go。 编译方式非常简单，可以使用Makefile" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://p4gefau1t.github.io/trojan-go/developer/build/" />
-<meta property="og:image" content="https://p4gefau1t.github.io/trojan-go/images/og-image.png"/>
+<meta property="og:url" content="https://p4gefau1t.github.io/trojan-go/developer/build/" /><meta property="og:image" content="https://p4gefau1t.github.io/trojan-go/images/og-image.png"/><meta property="article:section" content="developer" />
+
 <meta property="og:site_name" content="Trojan-Go Docs" />
+
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://p4gefau1t.github.io/trojan-go/images/og-image.png"/>
 
@@ -30,11 +31,7 @@
 <meta itemprop="name" content="编译和自定义Trojan-Go">
 <meta itemprop="description" content="编译需要Go版本号高于1.14.x，请在编译前确认你的编译器版本。推荐使用snap安装和更新go。 编译方式非常简单，可以使用Makefile">
 
-<meta itemprop="wordCount" content="403">
-<meta itemprop="image" content="https://p4gefau1t.github.io/trojan-go/images/og-image.png"/>
-
-
-
+<meta itemprop="wordCount" content="405"><meta itemprop="image" content="https://p4gefau1t.github.io/trojan-go/images/og-image.png"/>
 <meta itemprop="keywords" content="" /></head>
 <body><div class="container"><header>
 <h1>Trojan-Go Docs</h1>
@@ -63,7 +60,7 @@ GOOS<span style="color:#f92672">=</span>linux GOARCH<span style="color:#f92672">
 </code></pre></div><p>你可以使用release.sh进行批量的多个平台的交叉编译，release版本使用了这个脚本进行构建。</p>
 <p>Trojan-Go的大多数模块是可插拔的。在build文件夹下可以找到各个模块的导入声明。如果你不需要其中某些功能，或者需要缩小可执行文件的体积，可以使用构建标签(tags)进行模块的自定义，例如</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">go build -tags <span style="color:#e6db74">&#34;full&#34;</span> <span style="color:#75715e">#编译所有模块</span>
-go build -tags <span style="color:#e6db74">&#34;client&#34;</span> -ldflags<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-s -w&#34;</span> <span style="color:#75715e">#只有客户端功能，且去除符号表缩小体积</span>
+go build -tags <span style="color:#e6db74">&#34;client&#34;</span> -trimpath -ldflags<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-s -w -buildid=&#34;</span> <span style="color:#75715e">#只有客户端功能，且去除符号表缩小体积</span>
 go build -tags <span style="color:#e6db74">&#34;server mysql&#34;</span> <span style="color:#75715e">#只有服务端和mysql支持</span>
 </code></pre></div><p>使用full标签等价于</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">go build -tags <span style="color:#e6db74">&#34;api client server forward nat other&#34;</span>
